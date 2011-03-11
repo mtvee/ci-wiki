@@ -21,11 +21,11 @@ Setup
 -----
 
  * put the code somewhere your web server can see it.
- * create a database and a user for the wiki to use, tables will be automatically created so watch you don't nuke something if you use an existing db (see wiki_model.php)
- * edit '/system/application/config/config.php' and set the server path
- * edit '/system/application/config/database.php' and set your mysql stuff 
- * edit '/system/application/config/autoload.php' and make sure 'database' library and 'url' helper are loaded
- * you should be able to visit SITE_URL/index.php/wiki and get to edit the index page
+ * create a database and a user for the wiki to use. *tables will be automatically created so watch you don't nuke something if you use an existing db (see wiki_model.php)*
+ * edit `/system/application/config/config.php` and set the server path
+ * edit `/system/application/config/database.php` and set your mysql stuff 
+ * edit `/system/application/config/autoload.php` and make sure 'database' library and 'url' helper are loaded
+ * you should be able to visit `SITE_URL/index.php/wiki` and get to edit the index page
 
 Notes
 -----
