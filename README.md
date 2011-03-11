@@ -2,8 +2,13 @@ CI-Wiki
 ======
 
 This is a very simple wiki written with codeigniter. It is meant to be
-a demonstration and not *production* code. At the moment it is missing some 
-very important things that you need to be aware of...
+a demonstration and not *production* code something that can be learned
+from and possibly build your own wiki. There seems to be a lack of wiki
+code for CI so I though I would put this up in the hope it may help someone
+just starting.
+ 
+At the moment it is missing some very important things that you need to be 
+aware of...
 
   * there is no authentication so the wiki is wide open. *Don't run this
     on a production server*
