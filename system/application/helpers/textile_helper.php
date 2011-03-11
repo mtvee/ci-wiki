@@ -1,8 +1,5 @@
 <?php
 
-/* Textile with some cheezy wiki-like additions */
-
-
 function camelCase($subject, $delimiters = ' _-')
 {
   if (!is_string($subject)) {

@@ -1,7 +1,6 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-
 class Wiki extends Controller
 {
 
@@ -12,6 +11,7 @@ class Wiki extends Controller
     $this->load->model('wiki_model');
     $this->load->helper('textile');
     $this->load->helper('url');
+		$this->load->library('creole');
 	}
 
 	
@@ -23,9 +23,13 @@ class Wiki extends Controller
     }
     
     $editing = false;
-    if( $this->uri->segment(3,'') == 'edit' ) {
+    if( $this->uri->segment(3,'') == 'edit') {
       $editing = true;
     }
+    if( $this->input->post('cancel')) {
+			$editing = false;
+		}
+		
     if( $this->uri->segment(3,'') == 'history' ) {
       $this->history( $page_name );
       return;
@@ -40,9 +44,10 @@ class Wiki extends Controller
       $title = $this->input->post('title');
       $body = $this->input->post('bodytext');
       if( $id == -1 ) {
-        $this->wiki_model->add_page( $title, $body, 'testuser' );
+				/* TODO add username once auth is working */
+        $this->wiki_model->add_page( $title, $body, 'guest' );
       } else {
-        $this->wiki_model->update_page( $id, $title, $body, 'testuser' );
+        $this->wiki_model->update_page( $id, $title, $body, 'guest' );
       }
       $editing = false;
     }
@@ -67,10 +72,11 @@ class Wiki extends Controller
 			);
 
     if( $editing ) {
-			$this->load->view('wiki/page_edit', $pg_data );
+			$content = $this->load->view('wiki/page_edit', $pg_data, true );
     } else {
-			$this->load->view('wiki/page_view', $pg_data );
+			$content = $this->load->view('wiki/page_view', $pg_data, true );
     }
+		$this->load->view('layouts/standard_page', array('content' => $content));
 	}
 
   function history( $page_name )
@@ -91,7 +97,9 @@ class Wiki extends Controller
       'errors' => ''
       );
 
-		$this->load->view('wiki/page_history', $pg_data );
+		$content = $this->load->view('wiki/page_history', $pg_data, true );
+		$this->load->view('layouts/standard_page', array('content' => $content));
+		
   }
 
 	function diff( $page_name, $id )
@@ -101,7 +109,9 @@ class Wiki extends Controller
       'errors' => ''
       );
 
-		$this->load->view('wiki/page_diff', $pg_data );		
+		$this->load->view('wiki/page_diff', $pg_data, true );	
+		$this->load->view('layouts/standard_page', array('content' => $content));
+			
 	}
 
 }

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome to CI-Wiki</title>
+<title>Welcome to CodeIgniter</title>
 
 <style type="text/css">
 
@@ -54,24 +54,9 @@ span.ins {
 span.del {
 	display: block; background-color: #f99;
 }
-
 </style>
 </head>
 <body>
-
-<h3><?= $diff->title ?></h3>
-
-<?php $lines = explode( "\n", $diff->body ); 
-	foreach( $lines as $line ):
-		if( strlen($line)) {
-			if( $line[0] == '<' ) {
-				echo '<span class="del">' . htmlspecialchars($line) . '</span>';
-			}
-			else if( $line[0] == '>' ) {
-				echo '<span class="ins">' . htmlspecialchars($line) . '</span>';			
-			} else {
-				echo '<br/>' .  htmlspecialchars($line);			
-			}
-		} 
-	endforeach;
-?>
+	<?= $content ?>
+</body>
+</html>
