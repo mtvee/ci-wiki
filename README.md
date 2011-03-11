@@ -5,7 +5,7 @@ This is a very simple wiki written with codeigniter. It is meant to be
 a demonstration and not *production* code something that can be learned
 from and possibly build your own wiki. There seems to be a lack of wiki
 code for CI so I though I would put this up in the hope it may help someone
-just starting.
+just starting. Comments are welcome!
  
 At the moment it is missing some very important things that you need to be 
 aware of...
