@@ -47,12 +47,12 @@ function diff( $old, $new )
    $t1 = explode("\n",$old);
    $x = array_pop($t1);
    if ($x > '') {
-     $t1[] = "$x\n\\ No newline at end of file";
+     $t1[] = "$x\n\\ "; //No newline at end of file";
    }
    $t2 = explode("\n",$new);
    $x = array_pop($t2);
    if ($x > '') {
-     $t2[] = "$x\n\\ No newline at end of file";
+     $t2[] = "$x\n\\ "; //No newline at end of file";
    }
 
    # build a reverse-index array using the line as key and line number as value

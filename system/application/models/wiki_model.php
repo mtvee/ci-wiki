@@ -71,6 +71,12 @@ class Wiki_model extends Model
     return $this->db->get_where( $this->table_name_revisions, array('page_id' => $page_id ));
   }
 
+  function get_revision( $id )
+  {
+    return $this->db->get_where( $this->table_name_revisions, array('id' => $id ));
+  }
+
+
   function check_tables()
   {
     $tables = array(

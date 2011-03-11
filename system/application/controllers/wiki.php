@@ -30,6 +30,10 @@ class Wiki extends Controller
       $this->history( $page_name );
       return;
     }
+    if( $this->uri->segment(3,'') == 'diff' ) {
+      $this->diff( $page_name, $this->uri->segment(4) );
+      return;
+    }
 
     if( $this->input->post('save')) {
       $id = $this->input->post('id');
@@ -89,5 +93,15 @@ class Wiki extends Controller
 
 		$this->load->view('wiki/page_history', $pg_data );
   }
+
+	function diff( $page_name, $id )
+	{
+    $pg_data = array(
+			'diff' => $this->wiki_model->get_revision( $id )->row(),
+      'errors' => ''
+      );
+
+		$this->load->view('wiki/page_diff', $pg_data );		
+	}
 
 }

@@ -7,7 +7,6 @@ very important things that you need to be aware of...
 
   * there is no authentication so the wiki is wide open. *Don't run this
     on a production server*
-  * changes are stored (diffs) but not web viewable as of yet
   * it requires MySQL (it would be nice to use disk too)
   * PHP 5+ only
   * it uses a kludge'd textile formatting (real wiki formatting would be nicer)

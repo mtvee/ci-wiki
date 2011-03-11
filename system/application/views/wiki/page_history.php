@@ -38,13 +38,15 @@ code {
  margin: 14px 0 14px 0;
  padding: 12px 10px 12px 10px;
 }
+
+a {
+	text-decoration: none;
+}
+
 #wiki-tools {
 	float: right;
 }
 
-#wiki-tools a {
-	text-decoration: none;
-}
 
 </style>
 </head>
@@ -60,7 +62,7 @@ code {
 <?php
 foreach( $revisions as $rev ) { ?>
 
- <li><?=$rev->created_on?> by <?= $rev->user ?></li>
+ <li><a href="<?=site_url()?>/wiki/<?=$page->title?>/diff/<?=$rev->id?>"><?=$rev->created_on?></a> by <?= $rev->user ?></li>
 
 <?php
 } ?>
