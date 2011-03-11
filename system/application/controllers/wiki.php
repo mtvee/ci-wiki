@@ -62,7 +62,16 @@ class Wiki extends Controller
       $editing = true;
     } else {
       if( !$editing ) {
-        $page->body = textile_text($page->body);
+				$parser = $this->config->item('wiki_parser');
+				switch( $parser ) {
+					case 'textile':
+	        	$page->body = textile_text($page->body);
+						break;
+					default:
+						$c = new creole();
+						$page->body = $c->parse($page->body);
+						break;
+				} 
       }
     }
 

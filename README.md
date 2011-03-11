@@ -9,7 +9,6 @@ very important things that you need to be aware of...
     on a production server*
   * it requires MySQL (it would be nice to use disk too)
   * PHP 5+ only
-  * it uses a kludge'd textile formatting (real wiki formatting would be nicer)
   * there is no documentation (erm...)
 
 Setup
@@ -21,3 +20,10 @@ Setup
  * edit '/system/application/config/database.php' and set your mysql stuff 
  * edit '/system/application/config/autoload.php' and make sure 'database' library and 'url' helper are loaded
  * you should be able to visit SITE_URL/index.php/wiki and get to edit the index page
+
+Notes
+-----
+ 
+There are two options for wiki parser. The default one is [Creole](http://www.wikicreole.org/).
+You can also set `$config['wiki_parser] = 'textile';` in the config file
+to get a cheezy textile renderer with a very basic link handler. 
