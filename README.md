@@ -12,8 +12,9 @@ aware of...
 
   * there is no authentication so the wiki is wide open. *Don't run this
     on a production server*
-  * it requires MySQL (it would be nice to use disk too)
+  * it requires MySQL (it would be nice to optionally use disk too)
   * PHP 5+ only
+  * Flat namespace
   * there is no documentation (erm...)
 
 Setup
