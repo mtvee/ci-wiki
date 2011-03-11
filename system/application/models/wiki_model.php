@@ -67,7 +67,7 @@ class Wiki_model extends Model
 
   function get_revisions( $page_id )
   {
-    $this->db->order_by('created_on');
+    $this->db->order_by('created_on', 'DESC');
     return $this->db->get_where( $this->table_name_revisions, array('page_id' => $page_id ));
   }
 

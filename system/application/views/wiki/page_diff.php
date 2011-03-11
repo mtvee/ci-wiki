@@ -58,12 +58,12 @@ a {
 	foreach( $lines as $line ):
 		if( strlen($line)) {
 			if( $line[0] == '<' ) {
-				echo '<span style="display: block; background-color: #f99;">' . $line . '</span>';
+				echo '<span style="display: block; background-color: #f99;">' . htmlspecialchars($line) . '</span>';
 			}
 			else if( $line[0] == '>' ) {
-				echo '<span style="display: block; background-color: #9f9;">' . $line . '</span>';			
+				echo '<span style="display: block; background-color: #9f9;">' . htmlspecialchars($line) . '</span>';			
 			} else {
-				echo '<br/>' . $line;			
+				echo '<br/>' .  htmlspecialchars($line);			
 			}
 		} 
 	endforeach;
