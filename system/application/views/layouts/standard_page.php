@@ -1,61 +1,30 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title><?= $page_title ?></title>
-  <style type="text/css">
+	<meta name="author" content="J Knight - CI-Wiki (https://github.com/mtvee/ci-wiki)" />
+	<meta name="generator" content="CI-Wiki (https://github.com/mtvee/ci-wiki)" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<!-- styles -->
+  <link rel="stylesheet" href="<?=base_url()?>/css/style.css" type="text/css" />
 
-	body {
-	 background-color: #fff;
-	 margin: 40px;
-	 font-family: Lucida Grande, Verdana, Sans-serif;
-	 font-size: 14px;
-	 color: #4F5155;
-	}
-
-	a {
-	 color: #003399;
-	 background-color: transparent;
-	 font-weight: normal;
-	}
-
-	h1 {
-	 color: #444;
-	 background-color: transparent;
-	 border-bottom: 1px solid #D0D0D0;
-	 font-size: 16px;
-	 font-weight: bold;
-	 margin: 24px 0 2px 0;
-	 padding: 5px 0 6px 0;
-	}
-
-	code {
-	 font-family: Monaco, Verdana, Sans-serif;
-	 font-size: 12px;
-	 background-color: #f9f9f9;
-	 border: 1px solid #D0D0D0;
-	 color: #002166;
-	 display: block;
-	 margin: 14px 0 14px 0;
-	 padding: 12px 10px 12px 10px;
-	}
-
-	a {
-		text-decoration: none;
-	}
-
-	#wiki-tools {
-		float: right;
-	}
+	<!-- javascript -->
 	
-	/* diff */
-	span.ins {
-		display: block; background-color: #9f9;
-	}
-	span.del {
-		display: block; background-color: #f99;
-	}
-  </style>
+  <title><?= $page_title ?></title>
 </head>
 <body>
-	<?= $content ?>
+	<div class="wrap">
+
+		<div id="right-column">
+		</div> <!-- //right-column -->
+
+		<div id="main-column">
+			<?= $content ?>
+		</div> <!-- //main-column -->
+		
+		
+		<div id="footer">
+			&copy; <?=date('Y')?> J. Knight | <a href="http://github.com/mtvee/ci-wiki">CI-Wiki</a>
+		</div> <!-- //footer -->
+	</div> <!-- //wrap -->
 </body>
 </html>
