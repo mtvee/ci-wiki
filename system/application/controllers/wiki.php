@@ -118,7 +118,7 @@ class Wiki extends Controller
       'errors' => ''
       );
 
-		$this->load->view('wiki/page_diff', $pg_data, true );	
+		$content = $this->load->view('wiki/page_diff', $pg_data, true );	
 		$this->load->view('layouts/standard_page', array('content' => $content));
 			
 	}
