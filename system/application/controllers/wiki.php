@@ -115,6 +115,7 @@ class Wiki extends Controller
 	{
     $pg_data = array(
 			'diff' => $this->wiki_model->get_revision( $id )->row(),
+			'title' => $page_name,
       'errors' => ''
       );
 
