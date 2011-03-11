@@ -9,8 +9,12 @@ class Welcome extends Controller {
 	
 	function index()
 	{
-		$content = $this->load->view('welcome_message', array(), true);
-		$this->load->view('layouts/standard_page', array('content' => $content));
+		$pg_data = array(
+			'content' => $this->load->view('welcome_message', array(), true),
+			'page_title' => 'Welcome to CI-Wiki'
+		);
+		
+		$this->load->view('layouts/standard_page', $pg_data );
 	}
 }
 

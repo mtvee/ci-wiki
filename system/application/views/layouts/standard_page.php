@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome to CodeIgniter</title>
+<title><?= $page_title ?></title>
 
 <style type="text/css">
 

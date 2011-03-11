@@ -75,20 +75,26 @@ class Wiki extends Controller
       }
     }
 
-		$pg_data = array(
+		$view_data = array(
       'page' => $page,
       'errors' => ''
 			);
 
     if( $editing ) {
-			$content = $this->load->view('wiki/page_edit', $pg_data, true );
+			$content = $this->load->view('wiki/page_edit', $view_data, true );
     } else {
-			$content = $this->load->view('wiki/page_view', $pg_data, true );
+			$content = $this->load->view('wiki/page_view', $view_data, true );
     }
-		$this->load->view('layouts/standard_page', array('content' => $content));
+
+		$pg_data = array(
+			'content' => $content,
+			'page_title' => 'CI-Wiki - ' . $page->title
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );
 	}
 
-  function history( $page_name )
+  protected function history( $page_name )
   {
     $page = $this->wiki_model->get_page( $page_name );
     if( $page ) {
@@ -100,27 +106,39 @@ class Wiki extends Controller
       $page->title = $page_name;
     }
 
-    $pg_data = array(
+    $view_data = array(
       'page' => $page,
       'revisions' => $revisions,
       'errors' => ''
       );
 
-		$content = $this->load->view('wiki/page_history', $pg_data, true );
-		$this->load->view('layouts/standard_page', array('content' => $content));
+		$content = $this->load->view('wiki/page_history', $view_data, true );
+		
+		$pg_data = array(
+			'content' => $content,
+			'page_title' => 'CI-Wiki - History:' . $page->title
+		);
+		
+		$this->load->view('layouts/standard_page', $pg_data );
 		
   }
 
-	function diff( $page_name, $id )
+	protected function diff( $page_name, $id )
 	{
-    $pg_data = array(
+    $view_data = array(
 			'diff' => $this->wiki_model->get_revision( $id )->row(),
 			'title' => $page_name,
       'errors' => ''
       );
 
-		$content = $this->load->view('wiki/page_diff', $pg_data, true );	
-		$this->load->view('layouts/standard_page', array('content' => $content));
+		$content = $this->load->view('wiki/page_diff', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'page_title' => 'CI-Wiki - Revision:' . $page_name
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );
 			
 	}
 
