@@ -47,6 +47,14 @@ a {
 	clear: both;
 }
 
+input[type=submit], button {
+    border: 1px solid #a0a0a0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
+	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);;
+}
+
 #main-column {
 }
 
@@ -58,32 +66,34 @@ a {
 
 #footer {
 	clear: both;
-	border-top: 1px solid #ddd;
+	border: 1px solid #ddd;
 	text-align: center;
 	font-size: 0.8em;
-	padding-top: 5px;
-	background: #393939;
 	color: #808080; 
 	padding: 10px 0;
+	margin: 10px 0;
 	border-radius: 5px;
+	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
+	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);;
 }
 
 #footer a {
-	color: #fff;
+	color: #333;
 }
 
 /* wiki stuff */
 #wiki-tools {
 	float: right;
 	font-size: 0.9em;
-	background: #393939;
-	color: #808080; 
 	padding: 5px 5px;
 	border-radius: 5px;
+	border: 1px solid #ddd;
+	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
+	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);;
 }
 
 #wiki-tools a {
-	color: #fff;
+	color: #333;
 }
 
 /* diff */
