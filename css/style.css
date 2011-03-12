@@ -55,7 +55,7 @@ input[type=submit], button {
 
 #main-column {
 	padding-left: 10px;
-	margin-left: 175px;
+	margin-left: 190px;
 	border-left: 1px solid #ddd;
 }
 
@@ -65,15 +65,39 @@ input[type=submit], button {
 	padding-left: 10px;
 }
 
+
+#left-column h2  {
+	margin-top: 0px;
+	background-color: #393939;
+	color: #ddd;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+#left-column h2 a {
+	font-weight: bold;
+	color: #ddd;
+}
+
+#left-column h3 {
+	font-size: 1em;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: -5px;
+}
+
 #left-column ul {
+	list-style: none;
+	padding: 0 0;
 }
 
 #left-column li {
+	padding: 2px 5px;
+	border-bottom: 1px solid #ddd;
 }
 
 #left-column li a {
+	font-size: 0.9em;
 }
-
 
 #footer {
 	clear: both;
@@ -103,6 +127,10 @@ input[type=submit], button {
 	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
 	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);
 	
+}
+
+.odd {
+	background-color: #ddd;
 }
 
 #wiki-tools a {

@@ -28,6 +28,20 @@ class Wiki extends Controller
     }
 
     // figure out if there is an operation call
+		// we have two types of operations, site level and page level
+		// site level calls are made with page name = 'ciwiki'
+		if( $page_name == 'ciwiki' ) {
+	    if( $this->uri->segment(3,'') == 'changes') {
+				$this->changes();
+				return;
+			}
+	    if( $this->uri->segment(3,'') == 'index') {
+				$this->site_index();
+				return;
+			}
+		}
+		
+		// page level calls
     $editing = false;
     if( $this->uri->segment(3,'') == 'edit') {
       $editing = true;
@@ -99,7 +113,7 @@ class Wiki extends Controller
 		// data for the layout view
 		$pg_data = array(
 			'content' => $content,
-			'nav' => '',
+			'nav' => $this->mk_nav(),
 			'page_title' => 'CI-Wiki - ' . $page->title
 		);
 		// render
@@ -129,7 +143,7 @@ class Wiki extends Controller
 		
 		$pg_data = array(
 			'content' => $content,
-			'nav' => '',
+			'nav' => $this->mk_nav(),
 			'page_title' => 'CI-Wiki - History:' . $page->title
 		);
 		
@@ -150,12 +164,65 @@ class Wiki extends Controller
 
 		$pg_data = array(
 			'content' => $content,
-			'nav' => '',
+			'nav' => $this->mk_nav(),
 			'page_title' => 'CI-Wiki - Revision:' . $page_name
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );
 			
+	}
+
+	// generate the diff view for a given page revision
+	protected function changes()
+	{
+    $view_data = array(
+			'changes' => $this->wiki_model->recent_changes(),
+      'errors' => ''
+      );
+
+		$content = $this->load->view('wiki/ciwiki_changes', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - Recent Changes'
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );			
+	}
+
+
+	// generate the diff view for a given page revision
+	protected function site_index()
+	{
+    $view_data = array(
+			'pages' => $this->wiki_model->site_index(),
+      'errors' => ''
+      );
+
+		$content = $this->load->view('wiki/ciwiki_site_index', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - Recent Changes'
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );			
+	}
+
+
+
+	protected function mk_nav()
+	{
+		$nav = '<h3>Toolbox</h3>';
+		$nav .= '<ul class="vertical-nav">';
+		$nav .= '<li><a href="' . site_url() .'/wiki">wiki home</a></li>';
+		//$nav .= '<li><a href="' . site_url() .'">what links here</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/changes">recent changes</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/index">site index</a></li>';
+		$nav .= '</ul>';
+		return $nav;
 	}
 
 }

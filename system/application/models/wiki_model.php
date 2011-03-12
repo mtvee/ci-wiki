@@ -76,6 +76,19 @@ class Wiki_model extends Model
     return $this->db->get_where( $this->table_name_revisions, array('id' => $id ));
   }
 
+	function recent_changes()
+	{
+		$this->db->order_by('created_on', 'DESC' );
+		$this->db->limit( 20 );
+		return $this->db->get( $this->table_name_revisions );
+	}
+
+	function site_index()
+	{
+		$this->db->order_by('title');
+		return $this->db->get( $this->table_name );
+	}
+
 
   function check_tables()
   {

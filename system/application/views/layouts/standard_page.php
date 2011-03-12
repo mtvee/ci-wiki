@@ -15,7 +15,7 @@
 	<div class="wrap">
 
 		<div id="left-column">
-			<h2>CI-Wiki</h2>
+			<h2><a href="<?=site_url()?>">CI-Wiki</a></h2>
 			<?= $nav ?>
 		</div> <!-- //left-column -->
 

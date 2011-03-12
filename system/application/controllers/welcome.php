@@ -9,6 +9,7 @@ class Welcome extends Controller {
 	
 	function index()
 	{
+		
 		$pg_data = array(
 			'content' => $this->load->view('welcome_message', array(), true),
 			'nav' => '',
