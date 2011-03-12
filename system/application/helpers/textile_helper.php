@@ -23,21 +23,26 @@ function camelCase($subject, $delimiters = ' _-')
 }
 
 function wiki_link( $match )
-{
+{	
   if( $match[0][0] == '=') {
     return substr($match[0],1);
   }
+
+	if( count($match) > 2 ) {
+	  return "<a href='" . site_url() . "/wiki/" . camelCase($match[1]) . "'/>" . $match[2] . "</a>";		
+	}
   return "<a href='" . site_url() . "/wiki/" . camelCase($match[1]) . "'/>" . $match[1] . "</a>";
 }
 
 function textile_text( $text )
 {
   $t = new WikiTextile();
-  $t->hu = '/admin/wiki/';
+  $t->hu = '/wiki/';
 
   $formatted = $t->TextileThis( $text );
   // grab wiki links
-  $formatted = preg_replace_callback("/=?\[\[([\w\s\:]+)\]\]/U", "wiki_link", $formatted );
+  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-]+)\]\]/U", "wiki_link", $formatted );
+  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-]+)\|(.*)\]\]/U", "wiki_link", $formatted );
 
   return $formatted;
 }
