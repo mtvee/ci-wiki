@@ -31,9 +31,10 @@ Setup
 Notes
 -----
  
-There are two options for wiki parser. The default one is [Creole](http://www.wikicreole.org/).
-You can also set `$config['wiki_parser'] = 'textile';` in `config.php`
-to get a cheezy textile renderer with a very basic link handler. 
+There are two options for wiki parser. The default one is 
+[Creole](http://www.wikicreole.org/). You can also set 
+`$config['wiki_parser'] = 'textile';` in `config.php`. 
+Other parsers are easily added.
 
 Mysql
 -----
