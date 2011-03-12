@@ -91,7 +91,7 @@ class Wiki extends Controller
 	        	$page->body = textile_text($page->body);
 						break;
 					default:
-						$c = new creole();
+						$c = new creole(array('link_format' => site_url() . '/wiki/%s'));
 						$page->body = $c->parse($page->body);
 						break;
 				} 

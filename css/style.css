@@ -69,9 +69,12 @@ input[type=submit], button {
 #left-column h2  {
 	margin-top: 0px;
 	background-color: #393939;
-	color: #ddd;
 	padding: 5px;
 	border-radius: 5px;
+	background: #45484d; /* old browsers */
+	background: -moz-linear-gradient(top, #45484d 0%, #000000 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* webkit */
+	color: #ddd;
 }
 
 #left-column h2 a {
