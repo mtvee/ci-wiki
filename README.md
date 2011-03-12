@@ -33,3 +33,9 @@ Notes
 There are two options for wiki parser. The default one is [Creole](http://www.wikicreole.org/).
 You can also set `$config['wiki_parser'] = 'textile';` in `config.php`
 to get a cheezy textile renderer with a very basic link handler. 
+
+Mysql
+
+    $> mysql -u root -p
+    mysql> CREATE DATABASE ciwiki;
+    mysql> GRANT ALL ON ciwiki.* TO uciwiki@localhost IDENTIFIED BY 'yourpassword';

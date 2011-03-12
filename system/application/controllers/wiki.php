@@ -99,6 +99,7 @@ class Wiki extends Controller
 		// data for the layout view
 		$pg_data = array(
 			'content' => $content,
+			'nav' => '',
 			'page_title' => 'CI-Wiki - ' . $page->title
 		);
 		// render
@@ -128,6 +129,7 @@ class Wiki extends Controller
 		
 		$pg_data = array(
 			'content' => $content,
+			'nav' => '',
 			'page_title' => 'CI-Wiki - History:' . $page->title
 		);
 		
@@ -148,6 +150,7 @@ class Wiki extends Controller
 
 		$pg_data = array(
 			'content' => $content,
+			'nav' => '',
 			'page_title' => 'CI-Wiki - Revision:' . $page_name
 		);
 

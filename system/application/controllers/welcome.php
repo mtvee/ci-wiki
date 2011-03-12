@@ -11,6 +11,7 @@ class Welcome extends Controller {
 	{
 		$pg_data = array(
 			'content' => $this->load->view('welcome_message', array(), true),
+			'nav' => '',
 			'page_title' => 'Welcome to CI-Wiki'
 		);
 		

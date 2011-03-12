@@ -14,8 +14,10 @@
 <body>
 	<div class="wrap">
 
-		<div id="right-column">
-		</div> <!-- //right-column -->
+		<div id="left-column">
+			<h2>CI-Wiki</h2>
+			<?= $nav ?>
+		</div> <!-- //left-column -->
 
 		<div id="main-column">
 			<?= $content ?>
@@ -23,7 +25,7 @@
 		
 		
 		<div id="footer">
-			&copy; <?=date('Y')?> J. Knight | <a href="http://github.com/mtvee/ci-wiki">CI-Wiki</a>
+			&copy; <?=date('Y')?> J. Knight | <a href="http://github.com/mtvee/ci-wiki">CI-Wiki</a> | {elapsed_time}</a>
 		</div> <!-- //footer -->
 	</div> <!-- //wrap -->
 </body>
