@@ -43,6 +43,7 @@ class Wiki extends Controller
 		
 		// page level calls
     $editing = false;
+		$raw = false;
     if( $this->uri->segment(3,'') == 'edit') {
       $editing = true;
     }
@@ -57,6 +58,9 @@ class Wiki extends Controller
     if( $this->uri->segment(3,'') == 'diff' ) {
       $this->diff( $page_name, $this->uri->segment(4) );
       return;
+    }
+    if( $this->uri->segment(3,'') == 'raw' ) {
+			$raw = true;
     }
 		
 		// handle data submission
@@ -86,9 +90,15 @@ class Wiki extends Controller
     } else {
       if( !$editing ) {
 				$parser = $this->config->item('wiki_parser');
+				if( $raw ) {
+					$parser = 'raw';
+				}
 				switch( $parser ) {
 					case 'textile':
 	        	$page->body = textile_text($page->body);
+						break;
+					case 'raw':
+						$page->body = '<pre>' . $page->body . '</pre>';
 						break;
 					default:
 						$c = new creole(array('link_format' => site_url() . '/wiki/%s'));
