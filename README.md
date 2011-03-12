@@ -27,6 +27,7 @@ Setup
  * edit `/system/application/config/autoload.php` and make sure 'database' library and 'url' helper are loaded
  * you should be able to visit `SITE_URL/index.php/wiki` and get to edit the index page
 
+
 Notes
 -----
  
@@ -35,6 +36,7 @@ You can also set `$config['wiki_parser'] = 'textile';` in `config.php`
 to get a cheezy textile renderer with a very basic link handler. 
 
 Mysql
+-----
 
     $> mysql -u root -p
     mysql> CREATE DATABASE ciwiki;

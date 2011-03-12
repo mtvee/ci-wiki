@@ -89,6 +89,17 @@ class Wiki_model extends Model
 		return $this->db->get( $this->table_name );
 	}
 
+	function search( $query )
+	{
+		$items = explode( " ", $query );
+		foreach( $items as $term ) {
+			$this->db->or_like('body', $term );
+			$this->db->or_like('title', $term );
+		}
+		$this->db->order_by('title');
+		return $this->db->get( $this->table_name );
+	}
+
 
   function check_tables()
   {

@@ -22,7 +22,10 @@ class Wiki extends Controller
 	 */
 	function _remap()
 	{
-    $page_name = $this->uri->segment(2);
+		// this is the page name offset
+		$url_offs = 2;
+		
+    $page_name = $this->uri->segment( $url_offs );
     if( !$page_name ) {
       $page_name = 'Index';
     }
@@ -31,12 +34,16 @@ class Wiki extends Controller
 		// we have two types of operations, site level and page level
 		// site level calls are made with page name = 'ciwiki'
 		if( $page_name == 'ciwiki' ) {
-	    if( $this->uri->segment(3,'') == 'changes') {
+	    if( $this->uri->segment( $url_offs + 1,'') == 'changes') {
 				$this->changes();
 				return;
 			}
-	    if( $this->uri->segment(3,'') == 'index') {
+	    if( $this->uri->segment( $url_offs + 1,'') == 'index') {
 				$this->site_index();
+				return;
+			}
+	    if( $this->uri->segment( $url_offs + 1,'') == 'search') {
+				$this->search();
 				return;
 			}
 		}
@@ -44,22 +51,22 @@ class Wiki extends Controller
 		// page level calls
     $editing = false;
 		$raw = false;
-    if( $this->uri->segment(3,'') == 'edit') {
+    if( $this->uri->segment( $url_offs + 1,'') == 'edit') {
       $editing = true;
     }
     if( $this->input->post('cancel')) {
 			$editing = false;
 		}
 		
-    if( $this->uri->segment(3,'') == 'history' ) {
+    if( $this->uri->segment( $url_offs + 1,'') == 'history' ) {
       $this->history( $page_name );
       return;
     }
-    if( $this->uri->segment(3,'') == 'diff' ) {
+    if( $this->uri->segment( $url_offs + 1,'') == 'diff' ) {
       $this->diff( $page_name, $this->uri->segment(4) );
       return;
     }
-    if( $this->uri->segment(3,'') == 'raw' ) {
+    if( $this->uri->segment( $url_offs + 1,'') == 'raw' ) {
 			$raw = true;
     }
 		
@@ -182,7 +189,7 @@ class Wiki extends Controller
 			
 	}
 
-	// generate the diff view for a given page revision
+	// show recent changes
 	protected function changes()
 	{
     $view_data = array(
@@ -202,7 +209,7 @@ class Wiki extends Controller
 	}
 
 
-	// generate the diff view for a given page revision
+	// show site index
 	protected function site_index()
 	{
     $view_data = array(
@@ -222,7 +229,31 @@ class Wiki extends Controller
 	}
 
 
+	// show site index
+	protected function search()
+	{
+		$results = array();
+		if( $this->input->post('query')) {
+			$results = $this->wiki_model->search( $this->input->post('query'))->result();
+		}
+		
+		
+    $view_data = array(
+			'results' => $results,
+      'errors' => ''
+      );
 
+		$content = $this->load->view('wiki/ciwiki_search', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - Search'
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );			
+	}
+	
 	protected function mk_nav()
 	{
 		$nav = '<h3>Toolbox</h3>';
@@ -231,6 +262,7 @@ class Wiki extends Controller
 		//$nav .= '<li><a href="' . site_url() .'">what links here</a></li>';
 		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/changes">recent changes</a></li>';
 		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/index">site index</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/search">search</a></li>';
 		$nav .= '</ul>';
 		return $nav;
 	}
