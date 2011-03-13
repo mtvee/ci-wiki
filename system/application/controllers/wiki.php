@@ -61,7 +61,7 @@ class Wiki extends Controller
 		// page level calls
     $editing = false;
 		$raw = false;
-    if( $this->uri->segment( $url_offs + 1,'') == 'edit') {
+    if( $this->uri->segment( $url_offs + 1,'') == 'edit' && $this->wiki_auth->logged_in()) {
       $editing = true;
     }
     if( $this->input->post('cancel')) {
