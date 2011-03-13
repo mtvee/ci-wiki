@@ -45,14 +45,6 @@ code {
 	clear: both;
 }
 
-input[type=submit], button {
-    border: 1px solid #a0a0a0;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
-	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);
-}
-
 #main-column {
 	padding-left: 10px;
 	margin-left: 190px;
@@ -120,6 +112,35 @@ input[type=submit], button {
 	color: #333;
 }
 
+/* forms */
+input[type=submit], button {
+    border: 1px solid #a0a0a0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
+	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);
+}
+
+textarea {
+	font-family: Monaco, Courier, Monospace;
+}
+
+/* tables */
+table
+{
+	border-collapse:collapse;
+	width:100%
+}
+table, th, td
+{
+	border: 1px solid #ddd;
+}
+td {
+	text-align: left;
+	vertical-align: bottom;
+	padding: 3px;
+}
+
 /* wiki stuff */
 #wiki-tools {
 	float: right;
@@ -142,8 +163,10 @@ input[type=submit], button {
 
 /* diff */
 span.ins {
-	display: block; background-color: #9f9;
+	display: block; 
+	background-color: #9f9;
 }
 span.del {
-	display: block; background-color: #f99;
+	display: block; 
+	background-color: #f99;
 }

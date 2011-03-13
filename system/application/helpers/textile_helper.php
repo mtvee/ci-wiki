@@ -1,10 +1,11 @@
 <?php
 
-function camelCase($subject, $delimiters = ' _-')
+function camelCaseWord($subject, $delimiters = ' _-')
 {
   if (!is_string($subject)) {
     return '';
   }
+
   $subject = preg_replace('/[\s]+/', ' ', $subject);
 
   $subject = preg_split("/[$delimiters]/", $subject);
@@ -20,6 +21,15 @@ function camelCase($subject, $delimiters = ' _-')
   $subject = implode('', $subject);
 
   return $subject;
+}
+
+function camelCase($subject)
+{
+	$ra = explode('::', $subject );
+	foreach( $ra as &$r ) {
+		$r = camelCaseWord( $r );
+	}
+	return implode('::', $ra );
 }
 
 function wiki_link( $match )
@@ -41,8 +51,8 @@ function textile_text( $text )
 
   $formatted = $t->TextileThis( $text );
   // grab wiki links
-  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-]+)\]\]/U", "wiki_link", $formatted );
-  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-]+)\|(.*)\]\]/U", "wiki_link", $formatted );
+  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-\/\.]+)\]\]/U", "wiki_link", $formatted );
+  $formatted = preg_replace_callback("/=?\[\[([\w\s\:\-\/\.]+)\|(.*)\]\]/U", "wiki_link", $formatted );
 
   return $formatted;
 }
