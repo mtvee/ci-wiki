@@ -1,6 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+// Library class to handle parsing and parsing dialects
 class ciwiki_parser
 {
 	// this will run thru sprinf
@@ -11,6 +12,7 @@ class ciwiki_parser
 	{
 	}
 	
+	// add your parser in here
 	function parse( $text, $dialect = 'textile' )
 	{
 		switch( $dialect ) {
@@ -18,9 +20,9 @@ class ciwiki_parser
 			  include_once('parser_dialects/textile.php');
 				$textile = new Textile;
 				$textile->hu = '/wiki/';
-			  $html = $textile->TextileThis($text);
 			  // grab wiki links
-			  return $this->wikify_links($html);
+			  $html = $this->wikify_links( $text );
+			  return $textile->TextileThis( $html );
 				break;
 			case 'creole':
 		  	include_once('parser_dialects/creole.php');
@@ -30,9 +32,9 @@ class ciwiki_parser
 			case 'texy':
 	  		include_once('parser_dialects/texy.min.php');
 				$texy = new Texy();
-				$html = $texy->process( $text );
-			  // grab wiki links (FIXME this is broken for some reason)
-			  return $this->wikify_links($html);
+			  // grab wiki links
+			  $html = $this->wikify_links($text);
+				return $texy->process( $html );
 				break;
 			case 'raw':
 				return '<pre>' . $text . '</pre>';
@@ -43,13 +45,16 @@ class ciwiki_parser
 		}
 	}
 	
+	// deal with MediaWiki style links for local links.
+	// This keeps the local link stuff consistant across dialects
 	function wikify_links( $text )
 	{
-		$text = preg_replace_callback("/\[\[([\w\s\:\-]+)\]\]/U", array(&$this,'wiki_link'), $text );
-	  $text = preg_replace_callback("/\[\[([\w\s\:\-]+)\|(.*)\]\]/U", array(&$this,'wiki_link'), $text );
+		$text = preg_replace_callback("/\[\[([\w\s:-]+)\]\]/U", array(&$this,'wiki_link'), $text );
+	  $text = preg_replace_callback("/\[\[([\w\s:-]+)\|(.*)\]\]/U", array(&$this,'wiki_link'), $text );
 	  return $text;
 	}
 	
+	// CamelCase a word
 	function camelCaseWord($subject, $delimiters = ' _-')
 	{
 	  if (!is_string($subject)) {
@@ -57,7 +62,6 @@ class ciwiki_parser
 	  }
 
 	  $subject = preg_replace('/[\s]+/', ' ', $subject);
-
 	  $subject = preg_split("/[$delimiters]/", $subject);
 
 	  foreach ($subject as &$word) {
@@ -73,6 +77,8 @@ class ciwiki_parser
 	  return $subject;
 	}
 
+	// splits words on namespace '::', CamelCases the words and sticks
+	// thigs back together
 	function camelCase($subject)
 	{
 		$ra = explode('::', $subject );
@@ -82,6 +88,7 @@ class ciwiki_parser
 		return implode('::', $ra );
 	}
 
+	// callback from preg_replace in '$this->wikify_links'
 	function wiki_link( $match )
 	{	
 		if( count($match) > 2 ) {
