@@ -1,18 +1,20 @@
 CI-Wiki
 ======
 
-This is a very simple wiki written with codeigniter. It is meant to be
+This is a very simple wiki written with CodeIgniter. It is meant to be
 a demonstration and not *production* code; something that can be learned
-from and possibly to build your own wiki. There seems to be a lack of wiki
-code for CI so I though I would put this up in the hope it may help someone
+from and possibly to build your own wiki. I converted my localhost braindump
+wiki from DocuWiki to this so it is usable as is.
+
+Another wiki, yeah, I know, but I couldn't find much for a simple wiki with 
+CodeIgniter so I though I would put this up in the hope it may help someone 
 just starting. Comments are welcome!
  
 At the moment it is missing some very important things that you need to be 
 aware of...
 
-  * there is no authentication so the wiki is wide open. *Don't run this
-    on a production server*
-  * it requires MySQL (it would be nice to optionally use disk too)
+  * the authentication is limited to one user (check config/wiki_settings.php)
+  * it requires MySQL for pages (it would be nice to optionally use disk too)
   * PHP 5+ only
   * Flat namespace
   * there is no documentation (erm...)
@@ -31,10 +33,20 @@ Setup
 Notes
 -----
  
-There are two options for wiki parser. The default one is 
-[Creole](http://www.wikicreole.org/). You can also set 
-`$config['wiki_parser'] = 'textile';` in `config.php`. 
-Other parsers are easily added.
+There are two options for wiki parser. You can set
+`$config['wiki_parser'] = 'textile';` in `config/wiki_settings.php`
+to choose which one you want. Other parsers are easily added.
+
+The options are:
+  
+  * 'textile' - a simple textile parser with a clue about MediaWiki style links
+  * 'creole' - [Creole](http://www.wikicreole.org/) is a simple, more traditional wiki parser
+
+
+The authentication is quite insecure. The password is readable, plain text.
+You should replace the auth system with something like 
+[Ion Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth) if you want
+to get serious about this.
 
 Mysql
 -----

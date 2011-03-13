@@ -121,8 +121,23 @@ input[type=submit], button {
 	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);
 }
 
+input {
+	padding: 3px;	
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #a0a0a0;
+}
+
 textarea {
+	padding: 5px;
 	font-family: Monaco, Courier, Monospace;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #a0a0a0;
+}
+
+label {
+	font-size: 0.9em;
 }
 
 /* tables */
@@ -142,6 +157,14 @@ td {
 }
 
 /* wiki stuff */
+.wiki-page {
+	
+}
+
+.wiki-page h3, .wiki-page h2 {
+  border-bottom: 1px solid #ddd;
+}
+
 #wiki-tools {
 	float: right;
 	font-size: 0.9em;
@@ -150,7 +173,9 @@ td {
 	border: 1px solid #ddd;
 	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F9F9F9), to(#E3E3E3));
 	background: -moz-linear-gradient(top,  #F9F9F9,  #e3e3e3);
-	
+  	-moz-box-shadow: 5px 5px 5px #ccc;
+  	-webkit-box-shadow: 5px 5px 5px #ccc;
+	box-shadow: 5px 5px 5px #ccc;
 }
 
 .odd {

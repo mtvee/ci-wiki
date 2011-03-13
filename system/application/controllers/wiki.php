@@ -7,6 +7,8 @@ class Wiki extends Controller
 	function __construct()
 	{
 		parent::__construct();
+
+		$this->load->library('wiki_auth');
 		
     $this->load->model('wiki_model');
     $this->load->helper('textile');
@@ -45,6 +47,14 @@ class Wiki extends Controller
 	    if( $this->uri->segment( $url_offs + 1,'') == 'search') {
 				$this->search();
 				return;
+			}
+	    if( $this->uri->segment( $url_offs + 1,'') == 'login') {
+				$this->login();
+				return;
+			}
+	    if( $this->uri->segment( $url_offs + 1,'') == 'logout') {
+				$this->wiki_auth->logout();
+				redirect("/wiki");
 			}
 		}
 		
@@ -96,7 +106,7 @@ class Wiki extends Controller
       $editing = true;
     } else {
       if( !$editing ) {
-				$parser = $this->config->item('wiki_parser');
+				$parser = $this->config->item('wiki_parser','wiki_settings');
 				if( $raw ) {
 					$parser = 'raw';
 				}
@@ -228,6 +238,31 @@ class Wiki extends Controller
 		$this->load->view('layouts/standard_page', $pg_data );			
 	}
 
+	// login
+	protected function login()
+	{
+		if( $this->input->post('username') && $this->input->post('password')) {
+			if( $this->wiki_auth->login($this->input->post('username'),$this->input->post('password'))) {
+				redirect('/wiki');
+			}
+		}
+		
+    $view_data = array(
+      'errors' => ''
+      );
+
+		$content = $this->load->view('wiki/ciwiki_login', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - Login'
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );			
+	}
+
+
 
 	// show site index
 	protected function search()
@@ -263,6 +298,13 @@ class Wiki extends Controller
 		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/changes">recent changes</a></li>';
 		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/index">site index</a></li>';
 		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/search">search</a></li>';
+		
+		if( $this->wiki_auth->logged_in()) {
+			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/logout">logout</a></li>';
+	  } else {
+			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/login">login</a></li>';
+		}
+		
 		$nav .= '</ul>';
 		return $nav;
 	}

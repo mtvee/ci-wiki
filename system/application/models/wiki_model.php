@@ -110,7 +110,8 @@ class Wiki_model extends Model
   `body` text,
   `created_on` timestamp NULL DEFAULT NULL,
   `user` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `title` (`title`(255))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
       $this->table_name_revisions => "CREATE TABLE `wiki_revisions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
