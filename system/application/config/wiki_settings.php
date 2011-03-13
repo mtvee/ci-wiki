@@ -8,8 +8,11 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 |--------------------------------------------------------------------------
 | This is the wiki parser you wish to use for your pages.
 | Currently the following parsers are available:
+|
 |  creole  - a simple wiki parser with a more traditiona wiki style
 |  textile - a simple textile parser with addition to handle wiki links
+|  texy - a simple markdown like parser with addition to handle wiki links
+|  raw - returns text wrapped in pre tags
 |
 */
 $config['wiki_parser'] = 'textile';

@@ -8,11 +8,10 @@ class Wiki extends Controller
 	{
 		parent::__construct();
 
-		$this->load->library('wiki_auth');
-		
+		$this->load->library('wiki_auth');		
     $this->load->model('wiki_model');
-    $this->load->helper('textile');
-		$this->load->library('creole');
+		$this->load->library('ciwiki_parser');
+		$this->ciwiki_parser->link_format = site_url() . '/wiki/%s';
 	}
 
 	/**
@@ -110,18 +109,7 @@ class Wiki extends Controller
 				if( $raw ) {
 					$parser = 'raw';
 				}
-				switch( $parser ) {
-					case 'textile':
-	        	$page->body = textile_text($page->body);
-						break;
-					case 'raw':
-						$page->body = '<pre>' . $page->body . '</pre>';
-						break;
-					default:
-						$c = new creole(array('link_format' => site_url() . '/wiki/%s'));
-						$page->body = $c->parse($page->body);
-						break;
-				} 
+				$page->body = $this->ciwiki_parser->parse( $page->body, $parser );
       }
     }
 		
