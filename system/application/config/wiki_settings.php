@@ -15,7 +15,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 |  raw - returns text wrapped in pre tags
 |
 */
-$config['wiki_parser'] = 'texy';
+$config['wiki_parser'] = 'creole';
 
 /*
 |--------------------------------------------------------------------------
