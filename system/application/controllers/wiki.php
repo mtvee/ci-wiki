@@ -80,7 +80,7 @@ class Wiki extends Controller
     }
 		
 		// handle data submission
-    if( $this->input->post('save')) {
+    if( $this->input->post('save') && $this->wiki_auth->logged_in()) {
       $id = $this->input->post('id');
       $title = $this->input->post('title');
       $body = $this->input->post('bodytext');
@@ -102,7 +102,9 @@ class Wiki extends Controller
       $page->id = -1;
       $page->title = $page_name;
       $page->body = '';
-      $editing = true;
+			if( $this->wiki_auth->logged_in() ) {
+	      $editing = true;				
+			}
     } else {
       if( !$editing ) {
 				$parser = $this->config->item('wiki_parser','wiki_settings');
