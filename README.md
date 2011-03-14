@@ -39,7 +39,8 @@ to choose which one you want. Other parsers are easily added.
 
 The options are:
   
-  * 'textile' - a simple textile parser with a clue about MediaWiki style links
+  * 'markdown' - markdown (extra) with MediaWiki style links
+  * 'textile' - a simple textile parser with MediaWiki style links
   * 'creole' - [Creole](http://www.wikicreole.org/) is a simple, more traditional wiki parser
   * 'texy'  - [Texy](http://texy.info/en/) is a markdown like formatter
 
