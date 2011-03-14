@@ -2,7 +2,7 @@
 <h3><?=$page->title?></h3>
 
 <?= $errors ?>
-<form method="post" action="<?=site_url()?>/wiki/<?=$page->title?>">
+<form method="post" action="<?=site_url()?>/wiki/<?=$page->title?>" accept-charset="utf-8">
   <input type="hidden" name="id" value="<?=$page->id?>" />
   <label for="title">Page Name</label><br/>
   <input name="title" size="50" value="<?=$page->title?>" /><br/>

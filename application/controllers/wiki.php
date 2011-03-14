@@ -26,7 +26,7 @@ class Wiki extends CI_Controller
 		// this is the page name offset
 		$url_offs = 2;
 		
-    $page_name = $this->uri->segment( $url_offs );
+    $page_name = urldecode($this->uri->segment( $url_offs ));
     if( !$page_name ) {
       $page_name = 'Index';
     }

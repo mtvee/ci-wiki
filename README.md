@@ -4,8 +4,8 @@ CI-Wiki
 This is a very simple wiki written with CodeIgniter v2.0. It is meant to be
 a demonstration and not *production* code; something that can be learned
 from and possibly to build your own wiki. I converted my localhost braindump
-wiki from DocuWiki to this so it is usable as is and I will no doubt scratch 
-stuff as it itches.
+wiki from DocuWiki to this so it is usable as is and I will no doubt 
+continue to scratch stuff as it itches.
 
 Another wiki, yeah, I know, but I couldn't find much for a simple wiki with 
 CodeIgniter so I though I would put this up in the hope it may help someone 
@@ -34,8 +34,8 @@ Check out the CodeIgniter [User Guide](http://codeigniter.com/user_guide/) for m
 Notes
 -----
  
-There are two options for wiki parser. You can set
-`$config['wiki_parser'] = 'textile';` in `config/wiki_settings.php`
+There are a few options for the wiki parser. You can set
+`$config['wiki_parser'] = 'markdown';` in `config/wiki_settings.php`
 to choose which one you want. Other parsers are easily added.
 
 The options are:

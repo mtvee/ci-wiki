@@ -55,8 +55,8 @@ class ciwiki_parser
 	// This keeps the local link stuff consistant across dialects
 	function wikify_links( $text )
 	{
-		$text = preg_replace_callback("/\[\[([\w\s:-]+)\]\]/U", array(&$this,'wiki_link'), $text );
-	  $text = preg_replace_callback("/\[\[([\w\s:-]+)\|(.*)\]\]/U", array(&$this,'wiki_link'), $text );
+		$text = preg_replace_callback("/\[\[([\w\s\p{L}:-]+)\]\]/Uu", array(&$this,'wiki_link'), $text );
+	  $text = preg_replace_callback("/\[\[([\w\s\p{L}:-]+)\|(.*)\]\]/Uu", array(&$this,'wiki_link'), $text );
 	  return $text;
 	}
 	
