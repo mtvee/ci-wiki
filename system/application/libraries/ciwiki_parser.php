@@ -29,6 +29,12 @@ class ciwiki_parser
 				$c = new creole(array('link_format' => $this->link_format ));
 				return $c->parse($text);			
 				break;
+			case 'markdown':
+	  		include_once('parser_dialects/markdown.php');
+			  // grab wiki links
+			  $html = $this->wikify_links($text);
+				return Markdown( $html );
+				break;
 			case 'texy':
 	  		include_once('parser_dialects/texy.min.php');
 				$texy = new Texy();

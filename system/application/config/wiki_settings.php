@@ -15,12 +15,13 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 |  raw - returns text wrapped in pre tags
 |
 */
-$config['wiki_parser'] = 'creole';
+$config['wiki_parser'] = 'markdown';
 
 /*
 |--------------------------------------------------------------------------
 | Admin login
 |--------------------------------------------------------------------------
-| This is a plain vanilla user for site edits. Very simple, one user setup.
+| This is a plain vanilla user for site edits. 
+| Very simple, one user setup.
 */
 $config['wiki_admin_user'] = array('username'=>'admin','password'=>'letmein');
