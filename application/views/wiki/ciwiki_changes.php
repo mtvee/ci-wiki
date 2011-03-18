@@ -2,9 +2,9 @@
 
 <table style="width: 100%">
 	<tr>
-		<th>Page</th>
-		<th>Revised</th>
-		<th>By</th>
+		<th><?=lang('page')?></th>
+		<th><?=lang('date')?></th>
+		<th><?=lang('author')?></th>
 	</tr>
 <?php
  	$count = 0;

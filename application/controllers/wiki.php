@@ -8,7 +8,7 @@ class Wiki extends CI_Controller
 	{
 		parent::__construct();
 
-		// lamguage stuffs
+		// language stuffs
 		$this->lang->load('general','english');
 		$this->load->helper('language');
 		
@@ -288,7 +288,7 @@ class Wiki extends CI_Controller
 	
 	protected function mk_nav()
 	{
-		$nav = '<h3>Toolbox</h3>';
+		$nav = '<h3>' . lang('toolbox') . '</h3>';
 		$nav .= '<ul class="vertical-nav">';
 		$nav .= '<li><a href="' . site_url() .'/wiki">' . lang('wiki_home') . '</a></li>';
 		//$nav .= '<li><a href="' . site_url() .'">what links here</a></li>';

@@ -27,6 +27,9 @@ $lang['cancel'] = 'Cancel';
 
 
 // misc
+$lang['date'] = 'Date';
+$lang['author'] = 'Author';
+$lang['toolbox'] = 'Toolbox';
 $lang['page'] = 'Page';
 $lang['back'] = 'Back';
 $lang['back_tip'] = 'Back';
