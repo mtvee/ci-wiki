@@ -1,12 +1,12 @@
 
 <div id="wiki-tools">
   <?php if( $this->wiki_auth->logged_in()) { ?>
-  	<a href="<?=site_url()?>/wiki/<?=$page->title?>/edit" title="Edit Page">edit</a> |
+  	<a href="<?=site_url()?>/wiki/<?=$page->title?>/edit" title="<?=lang('edit_tip')?>"><?=lang('edit')?></a> |
   <?php } else { ?>
 	
 	<?php } ?>
-  <a href="<?=site_url()?>/wiki/<?=$page->title?>/history" title="Page History">history</a> |
-  <a href="<?=site_url()?>/wiki/" title="Wiki Home">home</a>
+  <a href="<?=site_url()?>/wiki/<?=$page->title?>/history" title="<?=lang('history_tip')?>"><?=lang('history')?></a> |
+  <a href="<?=site_url()?>/wiki/" title="Wiki Home"><?=lang('home')?></a>
 </div>
   
 <div class="wiki-page">

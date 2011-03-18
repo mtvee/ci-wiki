@@ -8,6 +8,10 @@ class Wiki extends CI_Controller
 	{
 		parent::__construct();
 
+		// lamguage stuffs
+		$this->lang->load('general','english');
+		$this->load->helper('language');
+		
 		$this->load->library('wiki_auth');		
     $this->load->model('wiki_model');
 		$this->load->library('ciwiki_parser');
@@ -104,6 +108,9 @@ class Wiki extends CI_Controller
       $page->body = '';
 			if( $this->wiki_auth->logged_in() ) {
 	      $editing = true;				
+			} else {
+				// show an error
+	      $page->body = '<p class="error">' . lang('page_missing') . '</p>';
 			}
     } else {
       if( !$editing ) {
@@ -161,7 +168,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - History:' . $page->title
+			'page_title' => 'CI-Wiki - ' . lang('history') . ':' . $page->title
 		);
 		
 		$this->load->view('layouts/standard_page', $pg_data );
@@ -182,7 +189,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - Revision:' . $page_name
+			'page_title' => 'CI-Wiki - ' . lang('revision') . ':' . $page_name
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );
@@ -202,7 +209,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - Recent Changes'
+			'page_title' => 'CI-Wiki - ' . lang('recent_changes')
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );			
@@ -222,7 +229,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - Recent Changes'
+			'page_title' => 'CI-Wiki - ' . lang('site_index')
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );			
@@ -246,7 +253,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - Login'
+			'page_title' => 'CI-Wiki - ' . lang('login')
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );			
@@ -273,7 +280,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - Search'
+			'page_title' => 'CI-Wiki - ' . lang('search')
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );			
@@ -283,16 +290,16 @@ class Wiki extends CI_Controller
 	{
 		$nav = '<h3>Toolbox</h3>';
 		$nav .= '<ul class="vertical-nav">';
-		$nav .= '<li><a href="' . site_url() .'/wiki">wiki home</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki">' . lang('wiki_home') . '</a></li>';
 		//$nav .= '<li><a href="' . site_url() .'">what links here</a></li>';
-		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/changes">recent changes</a></li>';
-		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/index">site index</a></li>';
-		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/search">search</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/changes">' . lang('recent_changes') . '</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/index">' . lang('site_index') . '</a></li>';
+		$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/search">' . lang('search') . '</a></li>';
 		
 		if( $this->wiki_auth->logged_in()) {
-			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/logout">logout</a></li>';
+			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/logout">' . lang('logout') . '</a></li>';
 	  } else {
-			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/login">login</a></li>';
+			$nav .= '<li><a href="' . site_url() .'/wiki/ciwiki/login">' . lang('login') . '</a></li>';
 		}
 		
 		$nav .= '</ul>';

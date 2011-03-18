@@ -1,10 +1,10 @@
 
 <div id="wiki-tools">
-  <a href="<?=site_url()?>/wiki/<?=$page->title?>" title="View Page">back</a> |
-  <a href="<?=site_url()?>/wiki/" title="Wiki Home">home</a>
+  <a href="<?=site_url()?>/wiki/<?=$page->title?>" title="<?=lang('back_tip')?>"><?=lang('back')?></a> |
+  <a href="<?=site_url()?>/wiki/" title="<?=lang('home_tip')?>"><?=lang('home')?></a>
 </div>
   
-<h3>Revisions for: <?=$page->title?></h3>
+<h3><?=lang('revision')?>: <?=$page->title?></h3>
 
 <ul>
 <?php

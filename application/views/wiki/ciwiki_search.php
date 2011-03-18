@@ -1,8 +1,8 @@
-<h3>Search</h3>
+<h3><?=lang('search')?></h3>
 
 <form method="post">
 	<input name="query" value="" size="50" />
-	<button>Go</button>
+	<button><?=lang('search')?></button>
 </form>
 
 <hr/>

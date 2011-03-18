@@ -1,7 +1,7 @@
 <div id="wiki-tools">
-  <a href="<?=site_url()?>/wiki/<?=$title?>/history" title="View Page">back</a> |
-  <a href="<?=site_url()?>/wiki/<?=$title?>" title="View Page">page</a> |
-  <a href="<?=site_url()?>/wiki/" title="Wiki Home">home</a>
+  <a href="<?=site_url()?>/wiki/<?=$title?>/history" title="<?=lang('back_tip')?>">back</a> |
+  <a href="<?=site_url()?>/wiki/<?=$title?>" title="<?=lang('page_tip')?>"><?=lang('page')?></a> |
+  <a href="<?=site_url()?>/wiki/" title="<?=lang('home_tip')?>"><?=lang('home')?></a>
 </div>
 
 

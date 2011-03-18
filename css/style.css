@@ -92,6 +92,7 @@ code {
 
 #left-column li a {
 	font-size: 0.9em;
+	text-transform: lowercase;
 }
 
 #footer {
@@ -156,6 +157,37 @@ td {
 	padding: 3px;
 }
 
+/* messages */
+.info, .success, .warning, .error {
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 5px 15px 40px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('/img/info.png');
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('/img/success.png');
+}
+.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('/img/warning.png');
+}
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('/img/error.png');
+}
+
 /* wiki stuff */
 .wiki-page {
 	
@@ -184,6 +216,7 @@ td {
 
 #wiki-tools a {
 	color: #666;
+	text-transform: lowercase;
 }
 
 /* diff */

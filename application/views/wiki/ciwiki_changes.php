@@ -1,4 +1,4 @@
-<h3>Recent Changes</h3>
+<h3><?= lang('recent_changes') ?></h3>
 
 <table style="width: 100%">
 	<tr>

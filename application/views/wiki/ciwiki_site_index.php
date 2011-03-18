@@ -1,8 +1,8 @@
-<h3>Site Index</h3>
+<h3><?=lang('site_index')?></h3>
 
 <table style="width: 100%">
 	<tr>
-		<th>Page</th>
+		<th><?=lang('page')?></th>
 	</tr>
 <?php
  	$count = 0;
