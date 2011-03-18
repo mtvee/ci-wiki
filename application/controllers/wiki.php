@@ -9,7 +9,7 @@ class Wiki extends CI_Controller
 		parent::__construct();
 
 		// language stuffs
-		$this->lang->load('general','english');
+		$this->lang->load('ciwiki','english');
 		$this->load->helper('language');
 		
 		$this->load->library('wiki_auth');		
