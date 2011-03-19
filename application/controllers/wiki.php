@@ -8,6 +8,8 @@ class Wiki extends CI_Controller
 	{
 		parent::__construct();
 
+		$this->namespace_sep = '::';
+
 		// language stuffs
 		$this->lang->load('ciwiki','english');
 		$this->load->helper('language');
@@ -31,10 +33,18 @@ class Wiki extends CI_Controller
 		$url_offs = 2;
 		
     $page_name = urldecode($this->uri->segment( $url_offs ));
-    if( !$page_name ) {
-      $page_name = 'Index';
-    }
-
+		$tmp = explode( $this->namespace_sep, $page_name );
+		if( $tmp[count($tmp)-1] == '' ) {
+			$tmp[count($tmp)-1] = 'Index';
+		}
+		
+		$namespace = implode( $this->namespace_sep, array_slice($tmp, 0, count($tmp)-1));
+		$page_name = $tmp[count($tmp)-1];
+		$page_path = $page_name;
+		if( trim($namespace) != '') {
+			$page_path = implode($this->namespace_sep, array( $namespace, $page_name));
+		}
+		
     // figure out if there is an operation call
 		// we have two types of operations, site level and page level
 		// site level calls are made with page name = 'ciwiki'
@@ -86,7 +96,10 @@ class Wiki extends CI_Controller
 		// handle data submission
     if( $this->input->post('save') && $this->wiki_auth->logged_in()) {
       $id = $this->input->post('id');
-      $title = $this->input->post('title');
+			$title = $this->input->post('title');
+			if( trim($this->input->post('namespace')) != '') {
+	      $title = implode($this->namespace_sep, array($this->input->post('namespace'), $this->input->post('title')));				
+			}
       $body = $this->input->post('bodytext');
       if( $id == -1 ) {
 				/* TODO add username once auth is working */
@@ -98,13 +111,14 @@ class Wiki extends CI_Controller
     }
 
 		// find the page
-    $page = $this->wiki_model->get_page( $page_name );
+    $page = $this->wiki_model->get_page( $page_path );
     
 		// page is empty, so edit it automatically
     if( !$page ) {
       $page = new StdClass();
       $page->id = -1;
       $page->title = $page_name;
+			$page->namespace = $namespace;
       $page->body = '';
 			if( $this->wiki_auth->logged_in() ) {
 	      $editing = true;				
@@ -113,6 +127,7 @@ class Wiki extends CI_Controller
 	      $page->body = '<p class="error">' . lang('page_missing') . '</p>';
 			}
     } else {
+			$page->namespace = $namespace;
       if( !$editing ) {
 				$parser = $this->config->item('wiki_parser','wiki_settings');
 				if( $raw ) {
@@ -125,6 +140,8 @@ class Wiki extends CI_Controller
 		// data for the view
 		$view_data = array(
       'page' => $page,
+			'page_name' => $page_name,
+			'namespace' => $namespace,
       'errors' => ''
 			);
 		// content is conditional on edit operation
@@ -216,13 +233,69 @@ class Wiki extends CI_Controller
 	}
 
 
+	protected function mk_tree( $ra, $delim )
+	{
+		$out = array();
+		$re = '/' . preg_quote( $delim, '/') . '/';
+		foreach( $ra as $key => $val ) {
+			$parts = preg_split( $re, $key, -1, PREG_SPLIT_NO_EMPTY );
+			$leaf = array_pop( $parts );
+			$parr = &$out;
+			foreach( $parts as $part ) {
+				if( !isset($parr[$part])) {
+					$parr[$part] = array('path'=>$part);
+				}
+				elseif( !is_array($parr[$part])) {
+					$parr[$part] = array('path' => $parr[$part]);
+				} 
+				$parr = &$parr[$part];
+			}
+			
+			if( empty($parr[$leaf])) {
+				$parr[$leaf] = $val;
+			} elseif( is_array($parr[$leaf])) {
+				$parr[$leaf]['path'] = $val;
+			}
+		}
+		return $out;
+	}
+
+	protected function render_tree( $tree, $out = '', $indent = 0 )
+	{
+		$out .= '<ul class="tree">';
+		foreach( $tree as $k => $v ) {
+			if( $k == 'path') {
+				continue;
+			}
+			$val = (is_array($v) ? $v['path'] : $v );
+			$out .= str_repeat(' ', $indent );
+			$out .= '<li><a href="' . site_url() . '/wiki/' . $val . '">' . $k . "</a></li>\n";
+			if( is_array($v) ) {
+				$out = $this->render_tree( $v, $out, $indent + 4 );
+			}
+		}
+		$out .= '</ul>';
+		return $out;
+	}
+
 	// show site index
 	protected function site_index()
 	{
+		$ndx = $this->wiki_model->site_index();
+		
+		$names = array();
+		foreach( $ndx->result() as $page ) {
+			$names[$page->title] = $page->title;
+		}
+		$tree = $this->mk_tree( $names, $this->namespace_sep );
+		//var_dump( $tree );
+		//echo $this->render_tree( $tree );
+		
     $view_data = array(
-			'pages' => $this->wiki_model->site_index(),
+			'pages' => $ndx->result(),
+			'tree' => $this->render_tree( $tree ),
       'errors' => ''
-      );
+     );
 
 		$content = $this->load->view('wiki/ciwiki_site_index', $view_data, true );	
 
@@ -258,8 +331,6 @@ class Wiki extends CI_Controller
 
 		$this->load->view('layouts/standard_page', $pg_data );			
 	}
-
-
 
 	// show site index
 	protected function search()
@@ -305,5 +376,5 @@ class Wiki extends CI_Controller
 		$nav .= '</ul>';
 		return $nav;
 	}
-
+	
 }

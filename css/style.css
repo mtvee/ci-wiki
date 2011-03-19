@@ -188,6 +188,23 @@ td {
     background-image: url('/img/error.png');
 }
 
+ul.tree, ul.tree ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	margin-left: 15px;
+}
+
+ul.tree li {
+	margin-left: 0;
+	padding: 2px 10px;
+	border-bottom: 1px solid #ddd;
+	border-left: 4px solid #ddd;
+}
+
 /* wiki stuff */
 .wiki-page {
 	

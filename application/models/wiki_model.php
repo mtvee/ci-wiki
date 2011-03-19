@@ -85,6 +85,7 @@ class Wiki_model extends CI_Model
 
 	function site_index()
 	{
+		$this->db->select('id, title, created_on, user');
 		$this->db->order_by('title');
 		return $this->db->get( $this->table_name );
 	}
