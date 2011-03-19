@@ -15,6 +15,14 @@ a {
 
 }
 
+a.missing {
+ 	color: #BB0000;
+ 	background-color: transparent;
+ 	font-weight: normal;
+	border-bottom: 1px dashed #BB0000;
+}
+
+
 h1 {
 	color: #444;
 	background-color: transparent;

@@ -10,11 +10,13 @@ class ciwiki_parser
 	// CTOR
 	function __construct(  )
 	{
+		$this->ci = get_instance();
 	}
 	
 	// add your parser in here
 	function parse( $text, $dialect = 'textile' )
 	{
+		
 		switch( $dialect ) {
 			case 'textile':
 			  include_once('parser_dialects/textile.php');
@@ -97,10 +99,17 @@ class ciwiki_parser
 	// callback from preg_replace in '$this->wikify_links'
 	function wiki_link( $match )
 	{	
-		if( count($match) > 2 ) {
-		  return "<a href='" . sprintf( $this->link_format, $this->camelCase($match[1])) . "'/>" . $match[2] . "</a>";		
+		$css_class = '';
+		$link = sprintf( $this->link_format, $this->camelCase($match[1]));
+		
+		if( !$this->ci->wiki_model->get_page( $this->camelCase($match[1]) )) {
+			$css_class = 'missing';
 		}
-	  return "<a href='" . sprintf( $this->link_format, $this->camelCase($match[1])) . "'/>" . $match[1] . "</a>";		
+		
+		if( count($match) > 2 ) {
+		  return "<a class='$css_class' href='$link'/>" . $match[2] . "</a>";		
+		}
+	  return "<a class='$css_class' href='$link'/>" . $match[1] . "</a>";		
 	}
 
 }
