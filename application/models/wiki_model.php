@@ -21,6 +21,13 @@ class Wiki_model extends CI_Model
     $this->check_tables();
   }
 
+	function page_exists( $page_name )
+	{
+		$this->db->select('id');
+	  $res = $this->db->get_where( $this->table_name, array('title' => $page_name ) );
+	  return $res->num_rows() > 0;
+	}
+
   function get_page( $page_name )
   {
     $res = $this->db->get_where( $this->table_name, array('title' => $page_name ) );

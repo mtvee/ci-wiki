@@ -21,7 +21,7 @@ class Wiki extends CI_Controller
 		// set the link format to point at our controller
 		$this->ciwiki_parser->link_format = site_url() . '/wiki/%s';
 		// set a callback function to detemine is a page exists
-		$this->ciwiki_parser->set_link_check_cb( array(&$this->wiki_model, 'get_page') );
+		$this->ciwiki_parser->set_link_check_cb( array(&$this->wiki_model, 'page_exists') );
 	}
 
 	/**
