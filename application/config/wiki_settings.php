@@ -1,7 +1,6 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
 /*
 |--------------------------------------------------------------------------
 | Wiki Parser
@@ -21,7 +20,8 @@ $config['wiki_parser'] = 'markdown';
 |--------------------------------------------------------------------------
 | Admin login
 |--------------------------------------------------------------------------
-| This is a plain vanilla user for site edits. 
-| Very simple, one user setup.
+| This is a plain vanilla user for site edits. Very simple, one user setup. 
+| One should be able to drop Ino Auth or another system in with little 
+| difficulty.
 */
 $config['wiki_admin_user'] = array('username'=>'admin','password'=>'letmein');

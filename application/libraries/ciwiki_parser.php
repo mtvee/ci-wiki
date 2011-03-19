@@ -10,7 +10,15 @@ class ciwiki_parser
 	// CTOR
 	function __construct(  )
 	{
-		$this->ci = get_instance();
+		$this->link_check = null;
+	}
+	
+	// this is a callback to check if links exist. It takes one
+	// parameter, that is, the page name and returns anything but false or null
+	// if the page exists
+	function set_link_check_cb( $cb )
+	{
+		$this->link_check = $cb;
 	}
 	
 	// add your parser in here
@@ -103,8 +111,11 @@ class ciwiki_parser
 		$css_class = '';
 		$link = sprintf( $this->link_format, $this->camelCase($match[1]));
 		
-		if( !$this->ci->wiki_model->get_page( $this->camelCase($match[1]) )) {
-			$css_class = 'missing';
+		// see if we have a callback to check links
+		if( is_callable($this->link_check) ) {
+			if( ! call_user_func($this->link_check, $this->camelCase($match[1]) )) {
+				$css_class = 'missing';
+			}
 		}
 		
 		if( count($match) > 2 ) {
