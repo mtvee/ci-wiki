@@ -23,10 +23,11 @@ class ciwiki_parser
 				$textile = new Textile;
 				$textile->hu = '/wiki/';
 			  // grab wiki links
-			  $html = $this->wikify_links( $text );
+			  $html = $this->wikify_links($text);
 			  return $textile->TextileThis( $html );
 				break;
 			case 'creole':
+				// TODO figure out how to color missing links with this thing
 		  	include_once('parser_dialects/creole.php');
 				$c = new creole(array('link_format' => $this->link_format ));
 				return $c->parse($text);			
