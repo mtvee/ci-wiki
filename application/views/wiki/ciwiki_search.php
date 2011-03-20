@@ -1,3 +1,4 @@
+
 <h3><?=lang('search')?></h3>
 
 <form method="post">

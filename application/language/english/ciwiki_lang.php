@@ -40,4 +40,7 @@ $lang['edit_tip'] = 'Edit Page';
 $lang['history_tip'] = 'Page History';
 $lang['page_tip'] = 'View Page';
 
+$lang['upload'] = 'Upload';
+$lang['media'] = 'Media';
+$lang['media_tip'] = 'Page Media';
 ?>

@@ -63,11 +63,16 @@ class ciwiki_parser
 	}
 	
 	// deal with MediaWiki style links for local links.
-	// This keeps the local link stuff consistant across dialects
+	// This keeps the local link & media stuff consistant across dialects
 	function wikify_links( $text )
 	{
-		$text = preg_replace_callback("/\[\[([\w\s\p{L}:-]+)\]\]/Uu", array(&$this,'wiki_link'), $text );
-	  $text = preg_replace_callback("/\[\[([\w\s\p{L}:-]+)\|(.*)\]\]/Uu", array(&$this,'wiki_link'), $text );
+		// links
+		$text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\]\]/Uu", array(&$this,'wiki_link'), $text );
+	  $text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\|(.*)\]\]/Uu", array(&$this,'wiki_link'), $text );
+		// media
+		$text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.]+)\]\]/Uu", array(&$this,'wiki_media'), $text );
+	  $text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.]+)\|(.*)\]\]/Uu", array(&$this,'wiki_media'), $text );
+
 	  return $text;
 	}
 	
@@ -105,7 +110,19 @@ class ciwiki_parser
 		return implode('::', $ra );
 	}
 
-	// callback from preg_replace in '$this->wikify_links'
+	// callback from preg_replace in '$this->wikify_links' to handle media
+	function wiki_media( $match )
+	{	
+		$link = site_url() . '/wikimedia/view/Index/' . $match[1];
+				
+		if( count($match) > 2 ) {
+		  return "<img src='$link' title='" . $match[2] . "' />";		
+		}
+	  return "<img src='$link' title='" . $match[1] . "' />";		
+	}
+
+
+	// callback from preg_replace in '$this->wikify_links' to handle links
 	function wiki_link( $match )
 	{	
 		$css_class = '';

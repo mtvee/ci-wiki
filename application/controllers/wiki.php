@@ -7,7 +7,11 @@ class Wiki extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-
+		
+		// this path
+		$this->wiki_path = site_url() . '/wiki';
+		
+		// the namespace separator
 		$this->namespace_sep = '::';
 
 		// language stuffs
@@ -85,6 +89,10 @@ class Wiki extends CI_Controller
 			$editing = false;
 		}
 		
+    if( $this->uri->segment( $url_offs + 1,'') == 'media' && $this->wiki_auth->logged_in()) {
+      $this->media( $page_name, $page_path );
+      return;
+    }
     if( $this->uri->segment( $url_offs + 1,'') == 'history' ) {
       $this->history( $page_name );
       return;
@@ -165,6 +173,60 @@ class Wiki extends CI_Controller
 		$this->load->view('layouts/standard_page', $pg_data );
 	}
 
+	// handle media
+	protected function media( $page_name, $page_path )
+	{
+		$page = $this->wiki_model->get_page( $page_path );
+		// make sure there is actually a page here
+		if( !$page ) {
+			redirect( $this->wiki_path );
+		}
+		
+		if( $this->input->post('upload')) {
+			$form_name = 'media';
+			if( isset($_FILES[$form_name]) && $_FILES[$form_name]['error'] == UPLOAD_ERR_OK ) {
+				$file_info = new StdClass();
+				$file_info->file_name = $_FILES[$form_name]['name'];
+				$file_info->tmp_name = $_FILES[$form_name]['tmp_name'];
+				$file_info->size = $_FILES[$form_name]['size'];
+				$file_info->type = $_FILES[$form_name]['type'];				
+				
+				$tmp = $file_info->tmp_name;
+				$fp = fopen( $tmp, 'r' );
+				$file_info->data = fread( $fp, filesize( $tmp ));
+				fclose( $fp );
+				
+				$this->wiki_model->add_media( $file_info->file_name, $page_name, $file_info->type, $file_info->size, $file_info->data );
+				
+			} else {
+				if( $_FILES[$form_name]['error'] != 0 ) {
+					switch($_FILES[$form_name]['error']) {
+						// http://php.net/manual/en/features.file-upload.errors.php
+					}
+				}
+				var_dump( $_FILES );
+			}
+		}
+		
+    $view_data = array(
+			'title' => $page_name,
+			'media' => $this->wiki_model->get_media_refs( $page_name ),
+			'page' => $page,
+      'errors' => ''
+      );
+
+		$content = $this->load->view('wiki/page_media', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - ' . lang('media') . ':' . $page_name
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );
+			
+	}
+
 	// generate the history view for a given page
   protected function history( $page_name )
   {
@@ -236,7 +298,7 @@ class Wiki extends CI_Controller
 		$this->load->view('layouts/standard_page', $pg_data );			
 	}
 
-
+	// used by site_index to parse the page names into a tree like assoc array
 	protected function mk_tree( $ra, $delim )
 	{
 		$out = array();
@@ -263,7 +325,8 @@ class Wiki extends CI_Controller
 		}
 		return $out;
 	}
-
+	
+	// used by site_index to render the page tree
 	protected function render_tree( $tree, $out = '', $indent = 0 )
 	{
 		$out .= '<ul class="tree">';
@@ -336,7 +399,7 @@ class Wiki extends CI_Controller
 		$this->load->view('layouts/standard_page', $pg_data );			
 	}
 
-	// show site index
+	// search
 	protected function search()
 	{
 		$results = array();
