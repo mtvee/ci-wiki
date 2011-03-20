@@ -145,7 +145,7 @@ class Wiki extends CI_Controller
 				if( $raw ) {
 					$parser = 'raw';
 				}
-				$page->body = $this->ciwiki_parser->parse( $page->body, $parser );
+				$page->body = $this->ciwiki_parser->parse( $page->body, $page_path, $parser );
       }
     }
 		

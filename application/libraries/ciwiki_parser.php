@@ -22,8 +22,9 @@ class ciwiki_parser
 	}
 	
 	// add your parser in here
-	function parse( $text, $dialect = 'textile' )
+	function parse( $text, $page_name, $dialect = 'textile' )
 	{
+		$this->page_name = $page_name;
 		
 		switch( $dialect ) {
 			case 'textile':
@@ -70,8 +71,8 @@ class ciwiki_parser
 		$text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\]\]/Uu", array(&$this,'wiki_link'), $text );
 	  $text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\|(.*)\]\]/Uu", array(&$this,'wiki_link'), $text );
 		// media
-		$text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.]+)\]\]/Uu", array(&$this,'wiki_media'), $text );
-	  $text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.]+)\|(.*)\]\]/Uu", array(&$this,'wiki_media'), $text );
+		$text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.\?]+)\]\]/Uu", array(&$this,'wiki_media'), $text );
+	  $text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.\?]+)\|(.*)\]\]/Uu", array(&$this,'wiki_media'), $text );
 
 	  return $text;
 	}
@@ -113,12 +114,24 @@ class ciwiki_parser
 	// callback from preg_replace in '$this->wikify_links' to handle media
 	function wiki_media( $match )
 	{	
-		$link = site_url() . '/wikimedia/view/Index/' . $match[1];
+		$media = explode( '?', $match[1] );
+		$size = '';
+		
+		//[[!imagename?WIDTHxHEIGHT]]
+		if( count($media) > 1 ) {
+			$sz = explode( 'x', $media[1] );
+			$size .= " width='" . $sz[0] . "'";
+			if( count($sz) > 1) {
+				$size .= " height='" . $sz[1] . "'";
+			}
+		}
+		
+		$link = site_url() . '/wikimedia/view/'. $this->page_name . '/' . $media[0];
 				
 		if( count($match) > 2 ) {
-		  return "<img src='$link' title='" . $match[2] . "' />";		
+		  return "<img src='$link' title='" . $match[2] . "' $size />";		
 		}
-	  return "<img src='$link' title='" . $match[1] . "' />";		
+	  return "<img src='$link' title='" . $match[1] . "' $size />";		
 	}
 
 

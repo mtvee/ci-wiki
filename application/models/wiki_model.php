@@ -145,6 +145,7 @@ class Wiki_model extends CI_Model
   function check_tables()
   {
     $tables = array(
+	
       $this->table_name => "CREATE TABLE `wiki_pages` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `title` varchar(256) NOT NULL,
@@ -154,6 +155,7 @@ class Wiki_model extends CI_Model
 			  PRIMARY KEY (`id`),
 			  KEY `title` (`title`(255))
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+			
       $this->table_name_revisions => "CREATE TABLE `wiki_revisions` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `page_id` int(11) DEFAULT NULL,
@@ -163,6 +165,7 @@ class Wiki_model extends CI_Model
 			  `created_on` timestamp NULL DEFAULT NULL,
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+			
 			$this->table_name_media => "CREATE TABLE `wiki_media` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `blob_type` varchar(25) NOT NULL DEFAULT '',
