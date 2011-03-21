@@ -323,7 +323,7 @@ class Wiki extends CI_Controller
 		$pg_data = array(
 			'content' => $content,
 			'nav' => $this->mk_nav(),
-			'page_title' => 'CI-Wiki - ' . lang('recent_changes')
+			'page_title' => 'CI-Wiki - ' . lang('help')
 		);
 
 		$this->load->view('layouts/standard_page', $pg_data );			
