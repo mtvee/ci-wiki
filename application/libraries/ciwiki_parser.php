@@ -71,8 +71,8 @@ class ciwiki_parser
 		$text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\]\]/Uu", array(&$this,'wiki_link'), $text );
 	  $text = preg_replace_callback("/\[\[([\w\s\p{L}:\-]+)\|(.*)\]\]/Uu", array(&$this,'wiki_link'), $text );
 		// media
-		$text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.\?]+)\]\]/Uu", array(&$this,'wiki_media'), $text );
-	  $text = preg_replace_callback("/\[\[\!([\w\s\p{L}:\-\.\?]+)\|(.*)\]\]/Uu", array(&$this,'wiki_media'), $text );
+		$text = preg_replace_callback("/\{\{\!([\w\s\p{L}:\-\.\?]+)\}\}/Uu", array(&$this,'wiki_media'), $text );
+	  $text = preg_replace_callback("/\{\{\!([\w\s\p{L}:\-\.\?]+)\|(.*)\}\}/Uu", array(&$this,'wiki_media'), $text );
 
 	  return $text;
 	}
@@ -119,10 +119,21 @@ class ciwiki_parser
 		
 		//[[!imagename?WIDTHxHEIGHT]]
 		if( count($media) > 1 ) {
-			$sz = explode( 'x', $media[1] );
-			$size .= " width='" . $sz[0] . "'";
-			if( count($sz) > 1) {
-				$size .= " height='" . $sz[1] . "'";
+			// downloadable content
+			if( $media[1] == 'download' || $media[1] == 'dl') {
+				$link = '<a href="' . site_url() . '/wikimedia/download/' . $this->page_name . '/' . $media[0] . '">';
+				if( count($match) > 2 ) {
+					$link .= $match[2];
+				} else {
+					$link .= 'download';
+				}
+				return $link . '</a>';
+			} else {
+				$sz = explode( 'x', $media[1] );
+				$size .= " width='" . $sz[0] . "'";
+				if( count($sz) > 1) {
+					$size .= " height='" . $sz[1] . "'";
+				}				
 			}
 		}
 		

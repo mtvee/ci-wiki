@@ -127,7 +127,9 @@ class Wiki_model extends CI_Model
 		$this->db->set('blob_name', $name );
 		$this->db->set('blob_data', $data );
 		$this->db->set('blob_size', $size );
-		$this->db->insert( $this->table_name_media );
+		if( !$this->db->insert( $this->table_name_media )) {
+			// max_allowed_packet = 500M in my.cnf perhaps?
+		}
 	}
 
 	function get_media_refs( $page_name )

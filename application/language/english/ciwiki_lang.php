@@ -43,4 +43,6 @@ $lang['page_tip'] = 'View Page';
 $lang['upload'] = 'Upload';
 $lang['media'] = 'Media';
 $lang['media_tip'] = 'Page Media';
+$lang['help'] = 'Help';
+
 ?>

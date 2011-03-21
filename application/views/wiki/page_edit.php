@@ -1,4 +1,10 @@
 
+<div id="wiki-tools">
+  <a href="<?=site_url()?>/wiki/" title="Wiki Home"><?=lang('home')?></a> |
+  <a href="<?=site_url()?>/wiki/ciwiki/help" title="Wiki Help"><?=lang('help')?></a>
+
+</div>
+
 <h3><?=$page->title?></h3>
 
 <?= $errors ?>

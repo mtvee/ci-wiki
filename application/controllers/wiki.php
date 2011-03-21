@@ -8,8 +8,10 @@ class Wiki extends CI_Controller
 	{
 		parent::__construct();
 		
-		// this path
+		// this url
 		$this->wiki_path = site_url() . '/wiki';
+		// the path to the help files
+		$this->wiki_help = APPPATH . '/views/wiki/help';
 		
 		// the namespace separator
 		$this->namespace_sep = '::';
@@ -67,6 +69,10 @@ class Wiki extends CI_Controller
 			}
 	    if( $this->uri->segment( $url_offs + 1,'') == 'search') {
 				$this->search();
+				return;
+			}
+	    if( $this->uri->segment( $url_offs + 1,'') == 'help') {
+				$this->help();
 				return;
 			}
 	    if( $this->uri->segment( $url_offs + 1,'') == 'login') {
@@ -288,6 +294,31 @@ class Wiki extends CI_Controller
       );
 
 		$content = $this->load->view('wiki/ciwiki_changes', $view_data, true );	
+
+		$pg_data = array(
+			'content' => $content,
+			'nav' => $this->mk_nav(),
+			'page_title' => 'CI-Wiki - ' . lang('recent_changes')
+		);
+
+		$this->load->view('layouts/standard_page', $pg_data );			
+	}
+
+	// show help page
+	protected function help()
+	{
+		$help = '';
+		
+		if( file_exists( $this->wiki_help . '/ciwiki_help.md')) {
+			$help = $this->ciwiki_parser->parse( file_get_contents( $this->wiki_help . '/ciwiki_help.md'), 'help', 'markdown');
+		}
+				
+    $view_data = array(
+			'help_content' => $help,
+      'errors' => ''
+      );
+
+		$content = $this->load->view('wiki/ciwiki_help', $view_data, true );	
 
 		$pg_data = array(
 			'content' => $content,
