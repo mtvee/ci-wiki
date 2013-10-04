@@ -56,3 +56,6 @@ Mysql
     $> mysql -u root -p
     mysql> CREATE DATABASE ciwiki;
     mysql> GRANT ALL ON ciwiki.* TO uciwiki@localhost IDENTIFIED BY 'yourpassword';
+
+
+
