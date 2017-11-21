@@ -15,6 +15,8 @@ class Wiki_model extends CI_Model
   {
     parent::__construct();
 		
+		$this->load->database();
+
 		// the names of our tables
     $this->table_name = 'wiki_pages';
     $this->table_name_revisions = 'wiki_revisions';
@@ -51,7 +53,7 @@ class Wiki_model extends CI_Model
     $this->db->set('title', $title );
     $this->db->set('body', $body );
     $this->db->set('user', $user );
-    $this->db->set('created_on', 'NOW()', false );
+    $this->db->set('created_on', 'CURRENT_TIMESTAMP', false );
     $this->db->insert( $this->table_name );
     // store the full original text
     $this->add_revision( $this->db->insert_id(), $title, $body, $user );
@@ -80,7 +82,7 @@ class Wiki_model extends CI_Model
     $this->db->set('title', $title );
     $this->db->set('body', $body );
     $this->db->set('user', $user );
-    $this->db->set('created_on', 'NOW()', false );
+    $this->db->set('created_on', 'CURRENT_TIMESTAMP', false );
     $this->db->insert( $this->table_name_revisions );
   }
 
@@ -143,47 +145,47 @@ class Wiki_model extends CI_Model
 		return $this->db->get_where( $this->table_name_media, array('page_name' => $page_name, 'blob_name' => $blob_name ));
 	}
 
+	function check_tables()
+	{
+		$this->load->dbforge();
 
-  function check_tables()
-  {
-    $tables = array(
-	
-      $this->table_name => "CREATE TABLE `wiki_pages` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `title` varchar(256) NOT NULL,
-			  `body` text,
-			  `created_on` timestamp NULL DEFAULT NULL,
-			  `user` varchar(128) DEFAULT NULL,
-			  PRIMARY KEY (`id`),
-			  KEY `title` (`title`(255))
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8",
-			
-      $this->table_name_revisions => "CREATE TABLE `wiki_revisions` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `page_id` int(11) DEFAULT NULL,
-			  `title` varchar(128) DEFAULT NULL,
-			  `body` text,
-			  `user` varchar(128) DEFAULT NULL,
-			  `created_on` timestamp NULL DEFAULT NULL,
-			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8",
-			
-			$this->table_name_media => "CREATE TABLE `wiki_media` (
-			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-			  `blob_type` varchar(25) NOT NULL DEFAULT '',
-			  `blob_data` longblob NOT NULL,
-			  `blob_name` varchar(256) NOT NULL DEFAULT '',
-			  `page_name` varchar(256) NOT NULL DEFAULT '',
-			  `blob_size` varchar(25) NOT NULL DEFAULT '',
-			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
-    );
 
-    foreach( $tables as $tbl => $sql ) {
-      if( !$this->db->table_exists($tbl)) {
-        $this->db->query( $sql );
-      }
-    }
-  }
+		$wiki_pages = array(
+			'id' => array('type'=>'int', 'unsigned'=>TRUE,"auto_increment"=>TRUE),
+			"title" => array('type'=>'varchar','constraint'=>256,'null'=>FALSE),
+			'body' => array('type'=>'text'),
+			'created_on' => array('type'=>'timestamp'),
+			'user' => array('type'=>'varchar')
+		);
+		$this->dbforge->add_field($wiki_pages);
+		// CI doesn't handle keys very well
+		if( !$this->db->table_exists('wiki_pages')) {
+			$this->dbforge->add_key('title');
+		}
+		$this->dbforge->create_table('wiki_pages', TRUE);
+
+		$wiki_revisions = array(
+			'id' => array('type'=>'int', 'unsigned'=>TRUE,"auto_increment"=>TRUE),
+			'page_id' => array('type'=>'int', 'unsigned'=>TRUE),
+			"title" => array('type'=>'varchar','constraint'=>256,'null'=>FALSE),
+			'body' => array('type'=>'text'),
+			'created_on' => array('type'=>'timestamp'),
+			'user' => array('type'=>'varchar')
+		);
+		$this->dbforge->add_field($wiki_revisions);
+		$this->dbforge->create_table('wiki_revisions', TRUE);
+
+		$wiki_media = array(
+			'id' => array('type'=>'int', 'unsigned'=>TRUE,"auto_increment"=>TRUE),			
+			"blob_type" => array('type'=>'varchar','constraint'=>25,'null'=>FALSE),
+			"blob_size" => array('type'=>'varchar','constraint'=>25,'null'=>FALSE),
+			"blob_name" => array('type'=>'varchar','constraint'=>256,'null'=>FALSE),
+			"page_name" => array('type'=>'varchar','constraint'=>256,'null'=>FALSE),
+			'blob_data' => array('type'=>'blob'),
+		);
+		$this->dbforge->add_field($wiki_media);
+		$this->dbforge->create_table('wiki_media', TRUE);
+
+	}
 
 }

@@ -6,7 +6,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * from 'wiki_settings.php' but one could easily drop in a proper
  * authentication system like ion_auth and use that instead.
  */
-class wiki_auth
+class Wiki_auth
 {
 	// the codeigniter instance
 	protected $ci;

@@ -2,7 +2,7 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 // Library class to handle parsing and parsing dialects
-class ciwiki_parser
+class Ciwiki_parser
 {
 	// this will run thru sprinf
 	public $link_format = '%s';

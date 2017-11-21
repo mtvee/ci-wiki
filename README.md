@@ -1,7 +1,7 @@
 CI-Wiki
 ======
 
-This is a very simple wiki written with CodeIgniter v2.0. It is meant to be
+This is a very simple wiki written with CodeIgniter v3.1.6. It is meant to be
 a demonstration and not *production* code; something that can be learned
 from and possibly to build your own wiki. I converted my localhost braindump
 wiki from DocuWiki to this so it is usable as is and I will no doubt 
@@ -15,18 +15,20 @@ At the moment it is missing some very important things that you need to be
 aware of...
 
   * the authentication is limited to one user (check config/wiki_settings.php)
-  * it requires MySQL for pages (it would be nice to optionally use disk too)
+  * it uses a database for pages, sqlite3 out of the box but easily setup for with any
   * PHP 5+ only
   * Flat namespace
   * there is no documentation (erm...)
+
+This is CodeIgniter 3.1.6. There is a 2.x branch in this repo if you are using that one.
 
 Setup
 -----
 
  * put the code somewhere your web server can see it.
- * create a database and a user for the wiki to use. *tables will be automatically created so watch you don't nuke something if you use an existing db (see wiki_model.php)*
  * edit `application/config/config.php` and set the `base_url` and `encryption_key`
- * edit `application/config/database.php` and set your mysql stuff 
+ * if you want to use another database, edit `application/config/database.php` and set accordingly
+ * create a database and a user for the wiki to use. *tables will be automatically created so watch you don't nuke something if you use an existing db (see wiki_model.php)*
  * you should be able to visit `SITE_URL/index.php/wiki`, login with `admin` & `letmein`  and edit the index page
 
 Check out the CodeIgniter [User Guide](http://codeigniter.com/user_guide/) for more details.

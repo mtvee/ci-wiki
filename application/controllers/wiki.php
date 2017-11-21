@@ -7,6 +7,8 @@ class Wiki extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+
+		$this->load->helper('url');		
 		
 		// this url
 		$this->wiki_path = site_url() . '/wiki';

@@ -1,3 +1,4 @@
 .DS_Store
 system/application/config/config.php
 system/application/config/database.php
+data/
